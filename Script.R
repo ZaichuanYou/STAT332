@@ -23,6 +23,7 @@ for (x in 1:length(names)){
 }
 
 print(vola)
-plot(factor(names), vola)
-
+names(vola) <- names
+plt <- barplot(vola, xaxt="n", xlab = "Industry", ylab = "Volatility")
+text(x=plt, y=-2, names, cex=0.5, xpd=TRUE)
 
