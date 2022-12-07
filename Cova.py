@@ -41,6 +41,7 @@ for file in os.listdir():
         plt.title('Vola over time', size = 18)
         #plt.tight_layout()
         #plt.show()
-        plt.savefig(fname=f"{file[:-4]}_Vola.png")
+        plt.savefig(fname="C:/Users/21995/Desktop/Math/Stat332/Final project/STAT332/Vola/"+f"{file[:-4]}_Vola.png")
+        plt.close()
         #dataset[file[-3:]] = data.describe()
 
