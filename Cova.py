@@ -8,7 +8,7 @@ from fastdtw import fastdtw
 from scipy.spatial.distance import euclidean
 
 
-path = "C:/Users/21995/Desktop/量化投资/CTA/CTA/data"
+path = "C:/Users/21995/Desktop/Math/Stat332/Final project/STAT332/Data"
 os.chdir(path)
   
 
@@ -20,12 +20,12 @@ for file in os.listdir():
         file_path = f"{path}/{file}"
   
         data = pd.read_csv(file_path)
-        data["vola"] = data["high"]-data["low"]
-        #dataset[f"{file[:-4]}"] = data
-        data["time"]=pd.to_datetime(data["time"])
-        temp = data.loc[data["time"]>"1/1/2021"]
+        data["vola"] = (data["high"]-data["low"])/(data["close"])
+        dataset[f"{file[:-4]}"] = data
+        #data["time"]=pd.to_datetime(data["time"])
+        #temp = data.loc[data["time"]>"1/1/2021"]
         #print(temp.head())
-        temp.to_csv(f"C:/Users/21995/Desktop/Math/Stat332/Final project/STAT332/Data-2021/{file[:-4]}.csv", index=False)
+        #temp.to_csv(f"C:/Users/21995/Desktop/Math/Stat332/Final project/STAT332/Data-2021/{file[:-4]}.csv", index=False)
         # data = data.drop(columns=["time", "code", "price_adjust_factor", "bid1", "ask1", "bidvol1", "askvol1", "open", "high", "low"])
         # stdsc = StandardScaler() 
         # X_std = stdsc.fit_transform(data)
@@ -53,13 +53,14 @@ for file in os.listdir():
         # plt.savefig(fname="C:/Users/21995/Desktop/Math/Stat332/Final project/STAT332/Vola/"+f"{file[:-4]}_Vola.png")
         # plt.close()
 
-# dtw = np.ones((len(dataset.keys()), len(dataset.keys())))
-# datalist = list(dataset.keys())
+dtw = np.ones((len(dataset.keys()), len(dataset.keys())))
+datalist = list(dataset.keys())
 
-# for cat_1 in range(0, len(datalist)):
-#     current = dataset[datalist[cat_1]]["vola"]
-#     for cat_2 in range(0, len(datalist)):
-#         testing = dataset[datalist[cat_2]]["vola"]
-#         dtw[cat_1][cat_2] = fastdtw(current, testing, dist = euclidean)[0]
-# print(datalist)
-# print(dtw)
+for cat_1 in range(0, len(datalist)):
+    print(list(dataset.keys())[cat_1])
+    current = dataset[datalist[cat_1]]["vola"]
+    for cat_2 in range(0, len(datalist)):
+        testing = dataset[datalist[cat_2]]["vola"]
+        dtw[cat_1][cat_2] = fastdtw(current, testing, dist = euclidean)[0]
+print(datalist)
+print(dtw)
